@@ -1,30 +1,40 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
  
 struct Student {
     int groupID;
-    std::string FirstName;
+    char FirstName[10];
     int marks[5];
-    std::string activity;
+    char activity[3];
 };
  
-void writeFile(std::string namePath, Student &person)
+void writeFile(char *namePath, struct Student person)
 {
-    std::ofstream out(namePath, std::ios::app);
-        if (out.is_open()) {
-            out << person.groupID << "  " << person.FirstName << "  ";
-            for (int i = 0; i < 5; i++)
-                out << person.marks[i] << " ";
-            out << person.activity << std::endl;
-        }
+    FILE *out;
+    if (out = fopen(namePath, "a+")) {
+        fprintf(out, "%d %s ", person.groupID, person.FirstName);
+        for (int i = 0; i < 5; i++)
+            fprintf(out, "%d ", person.marks[i]);
+        fprintf(out, "%s\n", person.activity);
+    }
 }
  
 int main()
 {
-    Student person1 = { 1, "Pupkin", { 3, 3, 4, 3, 4 }, "yes" };
+    struct Student Stud;
+    int i = 0;
  
-    writeFile("output.txt", person1);
+    Stud.groupID = 3;
+    strcpy(Stud.FirstName, "Pupkin");
+    strcpy(Stud.activity, "yes");
+    for (i = 0; i < 5; i++)
+        Stud.marks[i] = rand() % 4 + 1;
+ 
+ 
+    writeFile("output.txt", Stud);
     system("pause");
     return 0;
 }
+
