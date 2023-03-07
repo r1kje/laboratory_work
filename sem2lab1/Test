@@ -1,0 +1,30 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+ 
+struct Student {
+    int groupID;
+    std::string FirstName;
+    int marks[5];
+    std::string activity;
+};
+ 
+void writeFile(std::string namePath, Student &person)
+{
+    std::ofstream out(namePath, std::ios::app);
+        if (out.is_open()) {
+            out << person.groupID << "  " << person.FirstName << "  ";
+            for (int i = 0; i < 5; i++)
+                out << person.marks[i] << " ";
+            out << person.activity << std::endl;
+        }
+}
+ 
+int main()
+{
+    Student person1 = { 1, "Pupkin", { 3, 3, 4, 3, 4 }, "yes" };
+ 
+    writeFile("output.txt", person1);
+    system("pause");
+    return 0;
+}
