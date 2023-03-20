@@ -1,16 +1,23 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-
-struct student_session {
-	int index;
-	char surname[30];
-	int  score;
-};
+#include <stdlib.h>
 
 int main() {
-	FILE *file = fopen("test_sem1.txt", "w");
 
-	fclose(file);
+    int c, ns = 0;
+    int flag = 1;
 
-	return 0;
+    printf("Enter string: ");
+    printf("\n");
+    while (flag == 1)
+    {
+        c = getchar();
+
+        (c != ' ') ? ns = 0 : ++ns;
+        if (ns <= 1) { printf("%c", c); }
+        if (c == '\n') { flag = 0; }
+    }
+
+    printf("\n");
+    return flag;
 }
