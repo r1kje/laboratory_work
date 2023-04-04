@@ -1,40 +1,40 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
- 
-struct Student {
-    int groupID;
-    char FirstName[10];
-    int marks[5];
-    char activity[3];
-};
- 
-void writeFile(char *namePath, struct Student person)
-{
-    FILE *out;
-    if (out = fopen(namePath, "a+")) {
-        fprintf(out, "%d %s ", person.groupID, person.FirstName);
-        for (int i = 0; i < 5; i++)
-            fprintf(out, "%d ", person.marks[i]);
-        fprintf(out, "%s\n", person.activity);
+
+int main() {
+    char filename[100];
+    char temp[100];
+    int shortestLength = 100000;
+    char shortestString[100];
+    FILE *file;
+
+    // Get file name from user
+    printf("Введите имя файла: ");
+    scanf("%s", filename);
+
+    // Open file
+    file = fopen(filename, "r+");
+    if (file == NULL) {
+        printf("Не удалось открыть файл.\n");
+        exit(1);
     }
-}
- 
-int main()
-{
-    struct Student Stud;
-    int i = 0;
- 
-    Stud.groupID = 3;
-    strcpy(Stud.FirstName, "Pupkin");
-    strcpy(Stud.activity, "yes");
-    for (i = 0; i < 5; i++)
-        Stud.marks[i] = rand() % 4 + 1;
- 
- 
-    writeFile("output.txt", Stud);
-    system("pause");
+
+    // Find shortest string in file
+    while (fgets(temp, sizeof(temp), file)) {
+        int length = strlen(temp);
+        if (length < shortestLength) {
+            shortestLength = length;
+            strncpy(shortestString, temp, sizeof(shortestString));
+        }
+    }
+
+    // Replace shortest string with "С новым годом!"
+    fseek(file, -(shortestLength), SEEK_CUR);
+    fputs("С новым годом!", file);
+
+    // Close file
+    fclose(file);
+
     return 0;
 }
-
