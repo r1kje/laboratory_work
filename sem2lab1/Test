@@ -1,40 +1,40 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include 
+using namespace std;
 
 int main() {
-    char filename[100];
-    char temp[100];
-    int shortestLength = 100000;
-    char shortestString[100];
-    FILE *file;
+const int ROWS = 3;
+const int COLS = 4;
 
-    // Get file name from user
-    printf("Введите имя файла: ");
-    scanf("%s", filename);
+scss
+Copy code
+int matrix[ROWS][COLS] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+int maxVal = matrix[0][0];
+int maxRow = 0;
 
-    // Open file
-    file = fopen(filename, "r+");
-    if (file == NULL) {
-        printf("Не удалось открыть файл.\n");
-        exit(1);
-    }
-
-    // Find shortest string in file
-    while (fgets(temp, sizeof(temp), file)) {
-        int length = strlen(temp);
-        if (length < shortestLength) {
-            shortestLength = length;
-            strncpy(shortestString, temp, sizeof(shortestString));
+// Находим максимальный элемент и его строку
+for(int i=0; i<ROWS; i++) {
+    for(int j=0; j<COLS; j++) {
+        if(matrix[i][j] > maxVal) {
+            maxVal = matrix[i][j];
+            maxRow = i;
         }
     }
+}
 
-    // Replace shortest string with "С новым годом!"
-    fseek(file, -(shortestLength), SEEK_CUR);
-    fputs("С новым годом!", file);
+// Удаляем строку с максимальным элементом
+for(int i=maxRow; i<ROWS-1; i++) {
+    for(int j=0; j<COLS; j++) {
+        matrix[i][j] = matrix[i+1][j];
+    }
+}
 
-    // Close file
-    fclose(file);
+// Выводим измененную матрицу
+for(int i=0; i<ROWS-1; i++) {
+    for(int j=0; j<COLS; j++) {
+        cout << matrix[i][j] << " ";
+    }
+    cout << endl;
+}
 
-    return 0;
+return 0;
 }
