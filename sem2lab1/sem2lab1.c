@@ -1,23 +1,45 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-
-    int c, ns = 0;
-    int flag = 1;
-
-    printf("Enter string: ");
-    printf("\n");
-    while (flag == 1)
-    {
-        c = getchar();
-
-        (c != ' ') ? ns = 0 : ++ns;
-        if (ns <= 1) { printf("%c", c); }
-        if (c == '\n') { flag = 0; }
+#include <conio.h>
+#include <iostream>
+#include <fstream>
+ 
+using namespace std;
+ 
+char fileName[] = "e:\\txt.txt";
+ 
+void readFile()
+{
+    ifstream fileIn;
+    fileIn.open(fileName);
+    char* tmpStr = new char[1000];
+    char* tmp = new char[500];
+    tmpStr[0]=0;
+    bool comma = false;
+    while(fileIn >> tmp)
+    {           
+        strcat(tmpStr, tmp);
+        strcat(tmpStr, " ");
+        if(tmp[strlen(tmp)-1] == ',')
+            comma = true;
+        if(tmp[strlen(tmp)-1] == '.' || tmp[strlen(tmp)-1] == '!' || tmp[strlen(tmp)-1] == '?')
+        {
+            if(!comma)
+                cout << tmpStr;
+            tmpStr[0] = 0;
+            comma = false;
+        }
     }
-
-    printf("\n");
-    return flag;
+    
+    fileIn.close();
+    delete[] tmpStr;
+}
+ 
+int main()
+{
+    setlocale(LC_ALL,"Russian"); 
+    system("cls");  
+    cout << "Предложения, не содержащие запятых: " << endl << endl;
+    readFile();
+    getch();
+    return 0;
 }
