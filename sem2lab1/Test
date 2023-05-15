@@ -1,37 +1,46 @@
-#include 
+#include <iostream>
+#include <locale.h>
 using namespace std;
 
-int main() {
-const int ROWS = 3;
-const int COLS = 4;
+int main(){
+    setlocale(LC_ALL, "Rus");
+    int n, m;
+    cout << "Введите размерность матрицы: ";
+    cin >> n >> m;
+    int matr[n][m];
 
-scss
-Copy code
-int matrix[ROWS][COLS] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-int maxVal = matrix[0][0];
-int maxRow = 0;
+cout << "Введите матрицу:\n";
+for(int i = 0; i < n; i++){
+    for(int j = 0; j < m; j++){
+        cin >> matr[i][j];
+    }
+}
 
-// Находим максимальный элемент и его строку
-for(int i=0; i<ROWS; i++) {
-    for(int j=0; j<COLS; j++) {
-        if(matrix[i][j] > maxVal) {
-            maxVal = matrix[i][j];
-            maxRow = i;
+int maxElem = matr[0][0], maxI = 0;
+for(int i = 0; i < n; i++){
+    for(int j = 0; j < m; j++){
+        if(matr[i][j] > maxElem){
+            maxElem = matr[i][j];
+            maxI = i;
         }
     }
 }
 
-// Удаляем строку с максимальным элементом
-for(int i=maxRow; i<ROWS-1; i++) {
-    for(int j=0; j<COLS; j++) {
-        matrix[i][j] = matrix[i+1][j];
+cout << "Исходная матрица:\n";
+for(int i = 0; i < n; i++){
+    for(int j = 0; j < m; j++){
+        cout << matr[i][j] << " ";
     }
+    cout << endl;
 }
 
-// Выводим измененную матрицу
-for(int i=0; i<ROWS-1; i++) {
-    for(int j=0; j<COLS; j++) {
-        cout << matrix[i][j] << " ";
+cout << "Удаляем строку " << maxI+1 << " содержащую наибольший элемент " << maxElem << ":\n";
+for(int i = 0; i < n; i++){
+    if(i == maxI){
+        continue;
+    }
+    for(int j = 0; j < m; j++){
+        cout << matr[i][j] << " ";
     }
     cout << endl;
 }
