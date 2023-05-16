@@ -2,46 +2,48 @@
 #include <fstream>
 #include <string>
 
+
 using namespace std;
 
 int main()
 {
-    ifstream file("test.txt"); // открываем файл для чтения
+    setlocale(LC_ALL, "rus");
+    ifstream file("12345.txt");
 
-    if (!file) // если файла не существует или не удаётся его открыть
+    if (!file)
     {
         cerr << "Не удалось открыть файл!" << endl;
         return 1;
     }
 
-    string line; // переменная для хранения считанной строки
+    string line;
 
-    while (getline(file, line)) // читаем строки из файла
+    while (getline(file, line))
     {
-        int n = line.size(); // количество символов в строке
-        bool is_sentence = false; // флаг - является ли строка предложением
+        int n = line.size();
+        bool is_sentence = false;
 
         for (int i = 0; i < n; i++)
         {
-            if (line[i] == '.') // если встретили точку
+            if (line[i] == '.')
             {
-                is_sentence = true; // считаем строку предложением
+                is_sentence = true;
                 break;
             }
-            else if (line[i] == ',') // если встретили запятую
+            else if (line[i] == ',')
             {
-                is_sentence = false; // считаем строку НЕ предложением
+                is_sentence = false;
                 break;
             }
         }
 
-        if (is_sentence) // если строка является предложением
+        if (is_sentence)
         {
-            cout << line << endl; // выводим её на экран
+            cout << line << endl;
         }
     }
 
-    file.close(); // закрываем файл
+    file.close();
 
     return 0;
 }
